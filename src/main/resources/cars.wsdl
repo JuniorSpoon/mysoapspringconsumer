@@ -1,0 +1,59 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.artemas.com/mysoapspring/gen" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.artemas.com/mysoapspring/gen" targetNamespace="http://www.artemas.com/mysoapspring/gen">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.artemas.com/mysoapspring/gen">
+            <xs:element name="getCarRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="model" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCarResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="car" type="tns:car"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="car" type="tns:car"/>
+            <xs:complexType name="car">
+                <xs:sequence>
+                    <xs:element name="brand" type="xs:string"/>
+                    <xs:element name="year" type="xs:int"/>
+                    <xs:element name="color" type="xs:string"/>
+                    <xs:element name="model" type="xs:string"/>
+                    <xs:element name="horsePower" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getCarRequest">
+        <wsdl:part element="tns:getCarRequest" name="getCarRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getCarResponse">
+        <wsdl:part element="tns:getCarResponse" name="getCarResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CarPort">
+        <wsdl:operation name="getCar">
+            <wsdl:input message="tns:getCarRequest" name="getCarRequest"> </wsdl:input>
+            <wsdl:output message="tns:getCarResponse" name="getCarResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CarPortSoap11" type="tns:CarPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getCar">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="getCarRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="getCarResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CarPortService">
+        <wsdl:port binding="tns:CarPortSoap11" name="CarPortSoap11">
+            <soap:address location="http://localhost:8080/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
